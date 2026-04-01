@@ -1,0 +1,55 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "Debug (OpenOCD + ST-Link)",
+            "type": "cppdbg",
+            "request": "launch",
+            "program": "${workspaceFolder}/build/STM32-Maze-Car.elf",
+            "args": [],
+            "stopAtEntry": true,
+            "cwd": "${workspaceFolder}",
+            "environment": [],
+            "externalConsole": false,
+            "MIMode": "gdb",
+            "miDebuggerPath": "arm-none-eabi-gdb",
+            "miDebuggerServerAddress": "localhost:3333",
+            "debugServerPath": "openocd",
+            "debugServerArgs": "-f interface/stlink.cfg -f target/stm32f1x.cfg",
+            "serverStarted": "Info : Listening on port 3333",
+            "filterStderr": true,
+            "setupCommands": [
+                {
+                    "description": "Enable pretty-printing for gdb",
+                    "text": "-enable-pretty-printing",
+                    "ignoreFailures": true
+                },
+                {
+                    "description": "Reset and halt target",
+                    "text": "monitor reset halt",
+                    "ignoreFailures": false
+                },
+                {
+                    "description": "Load firmware",
+                    "text": "load",
+                    "ignoreFailures": false
+                }
+            ],
+            "postRemoteConnectCommands": [
+                {
+                    "description": "Reset and halt",
+                    "text": "monitor reset halt",
+                    "ignoreFailures": false
+                }
+            ],
+            "logging": {
+                "exceptions": true,
+                "moduleLoad": false,
+                "programOutput": false,
+                "engineLogging": false,
+                "trace": false,
+                "traceResponse": false
+            }
+        }
+    ]
+}

@@ -1,0 +1,184 @@
+#MicroXplorer Configuration settings - do not modify
+#Thu Apr 01 00:00:00 UTC 2026
+File.Version=6
+LibraryCopySrc=1
+
+# ── Project settings ─────────────────────────────────────────────────────────
+ProjectManager.LibraryCopySrc=1
+ProjectManager.ProjectBuildStruct=1
+ProjectManager.ProjectFileName=STM32F103VETx.ioc
+ProjectManager.ProjectName=STM32-Maze-Car
+ProjectManager.ToolChain=CMake
+ProjectManager.LibraryCoreVariant=LibNoSrc
+ProjectManager.DefaultFWLocation=true
+ProjectManager.FirmwarePackage=STM32Cube FW_F1 V1.8.5
+
+# ── MCU ───────────────────────────────────────────────────────────────────────
+Mcu.Family=STM32F1
+Mcu.IP0=NVIC
+Mcu.IP1=RCC
+Mcu.IP2=SYS
+Mcu.IP3=TIM2
+Mcu.IP4=TIM3
+Mcu.IP5=USART1
+Mcu.IPNb=6
+Mcu.Name=STM32F103V(C-D-E)Tx
+Mcu.Package=LQFP100
+Mcu.Pin0=PA6
+Mcu.Pin1=PA7
+Mcu.Pin2=PA9
+Mcu.Pin3=PA10
+Mcu.Pin4=PB0
+Mcu.Pin5=PB1
+Mcu.Pin6=PB10
+Mcu.Pin7=PB11
+Mcu.Pin8=PC0
+Mcu.Pin9=PC1
+Mcu.Pin10=PC2
+Mcu.Pin11=PC3
+Mcu.Pin12=PC4
+Mcu.Pin13=PC5
+Mcu.Pin14=PE0
+Mcu.Pin15=PH0-OSC_IN
+Mcu.Pin16=PH1-OSC_OUT
+Mcu.PinsNb=17
+Mcu.ThirdPartyNb=0
+Mcu.UserConstants=
+Mcu.UserName=STM32F103VETx
+
+# ── Pin functions ─────────────────────────────────────────────────────────────
+PA6.Peripheral=TIM3
+PA6.Signal=TIM3_CH1
+PA6.GPIOParameters=GPIO_Speed
+PA6.GPIO_Speed=GPIO_SPEED_FREQ_HIGH
+PA6.Mode=PWM Generation CH1
+
+PA7.Peripheral=TIM3
+PA7.Signal=TIM3_CH2
+PA7.GPIOParameters=GPIO_Speed
+PA7.GPIO_Speed=GPIO_SPEED_FREQ_HIGH
+PA7.Mode=PWM Generation CH2
+
+PA9.Peripheral=USART1
+PA9.Signal=USART1_TX
+PA9.Mode=Asynchronous
+
+PA10.Peripheral=USART1
+PA10.Signal=USART1_RX
+PA10.Mode=Asynchronous
+
+PB0.GPIO_Label=MOTOR_L_IN1
+PB0.Peripheral=GPIO
+PB0.Signal=GPIO_Output
+
+PB1.GPIO_Label=MOTOR_L_IN2
+PB1.Peripheral=GPIO
+PB1.Signal=GPIO_Output
+
+PB10.GPIO_Label=MOTOR_R_IN3
+PB10.Peripheral=GPIO
+PB10.Signal=GPIO_Output
+
+PB11.GPIO_Label=MOTOR_R_IN4
+PB11.Peripheral=GPIO
+PB11.Signal=GPIO_Output
+
+PC0.GPIO_Label=US_FRONT_TRIG
+PC0.Peripheral=GPIO
+PC0.Signal=GPIO_Output
+
+PC1.GPIO_Label=US_FRONT_ECHO
+PC1.Peripheral=GPIO
+PC1.Signal=GPIO_Input
+
+PC2.GPIO_Label=US_LEFT_TRIG
+PC2.Peripheral=GPIO
+PC2.Signal=GPIO_Output
+
+PC3.GPIO_Label=US_LEFT_ECHO
+PC3.Peripheral=GPIO
+PC3.Signal=GPIO_Input
+
+PC4.GPIO_Label=US_RIGHT_TRIG
+PC4.Peripheral=GPIO
+PC4.Signal=GPIO_Output
+
+PC5.GPIO_Label=US_RIGHT_ECHO
+PC5.Peripheral=GPIO
+PC5.Signal=GPIO_Input
+
+PE0.GPIO_Label=LED_STATUS
+PE0.Peripheral=GPIO
+PE0.Signal=GPIO_Output
+
+PH0-OSC_IN.Mode=HSE-External-Oscillator
+PH0-OSC_IN.Signal=RCC_OSC_IN
+
+PH1-OSC_OUT.Mode=HSE-External-Oscillator
+PH1-OSC_OUT.Signal=RCC_OSC_OUT
+
+# ── RCC (clock) ───────────────────────────────────────────────────────────────
+RCC.AHBFreq_Value=72000000
+RCC.APB1CLKDivider=RCC_HCLK_DIV2
+RCC.APB1Freq_Value=36000000
+RCC.APB1TimFreq_Value=72000000
+RCC.APB2Freq_Value=72000000
+RCC.APB2TimFreq_Value=72000000
+RCC.FCLKCortexFreq_Value=72000000
+RCC.FlatMode=1
+RCC.HCLKFreq_Value=72000000
+RCC.HSEDivPLL=RCC_HSE_PREDIV_DIV1
+RCC.HSEFreq_Value=8000000
+RCC.HSE_VALUE=8000000
+RCC.HSIFreq_Value=8000000
+RCC.HSI_VALUE=8000000
+RCC.IPParameters=AHBFreq_Value,APB1CLKDivider,APB1Freq_Value,APB1TimFreq_Value,APB2Freq_Value,APB2TimFreq_Value,FCLKCortexFreq_Value,FlatMode,HCLKFreq_Value,HSEDivPLL,HSEFreq_Value,HSE_VALUE,HSIFreq_Value,HSI_VALUE,LSEFreq_Value,LSE_VALUE,LSIFreq_Value,LSI_VALUE,MCOFreq_Value,PLLCLKFreq_Value,PLLMult,PLLSourceVirtual,SYSCLKFreq_VALUE,SYSCLKSource,TimSysFreq_Value,VCOOutput_IPFreq_Value
+RCC.LSEFreq_Value=32768
+RCC.LSE_VALUE=32768
+RCC.LSIFreq_Value=40000
+RCC.LSI_VALUE=40000
+RCC.MCOFreq_Value=0
+RCC.PLLCLKFreq_Value=72000000
+RCC.PLLMult=RCC_PLL_MUL9
+RCC.PLLSourceVirtual=RCC_PLLSOURCE_HSE
+RCC.SYSCLKFreq_VALUE=72000000
+RCC.SYSCLKSource=RCC_SYSCLKSOURCE_PLLCLK
+RCC.TimSysFreq_Value=72000000
+RCC.VCOOutput_IPFreq_Value=72000000
+
+# ── SYS ───────────────────────────────────────────────────────────────────────
+SYS.IPParameters=SWD
+SYS.SWD=SWD
+
+# ── TIM2 (1 MHz free-running for ultrasonic timing) ───────────────────────────
+TIM2.IPParameters=Channel,CounterMode,Prescaler,Period
+TIM2.Channel=No Channel
+TIM2.CounterMode=TIM_COUNTERMODE_UP
+TIM2.Prescaler=71
+TIM2.Period=4294967295
+
+# ── TIM3 (20 kHz PWM for motor speed) ────────────────────────────────────────
+TIM3.Channel-PWM\ Generation\ CH1=TIM_CHANNEL_1
+TIM3.Channel-PWM\ Generation\ CH2=TIM_CHANNEL_2
+TIM3.IPParameters=Channel-PWM Generation CH1,Channel-PWM Generation CH2,Prescaler,Period,AutoReloadPreload
+TIM3.AutoReloadPreload=TIM_AUTORELOAD_PRELOAD_ENABLE
+TIM3.Period=3599
+TIM3.Prescaler=0
+
+# ── USART1 (debug, 115200 baud) ───────────────────────────────────────────────
+USART1.BaudRate=115200
+USART1.IPParameters=VirtualMode,BaudRate
+USART1.VirtualMode=VM_ASYNC
+
+# ── NVIC ─────────────────────────────────────────────────────────────────────
+NVIC.BusFault_IRQn=true\:0\:0\:false\:false\:true\:false\:false\:false
+NVIC.DebugMonitor_IRQn=true\:0\:0\:false\:false\:true\:false\:false\:false
+NVIC.ForceEnableDMAVector=true
+NVIC.HardFault_IRQn=true\:0\:0\:false\:false\:true\:false\:false\:false
+NVIC.MemoryManagement_IRQn=true\:0\:0\:false\:false\:true\:false\:false\:false
+NVIC.NonMaskableInt_IRQn=true\:0\:0\:false\:false\:true\:false\:false\:false
+NVIC.PendSV_IRQn=true\:0\:15\:false\:false\:false\:false\:false\:false
+NVIC.PriorityGroup=NVIC_PRIORITYGROUP_4
+NVIC.SVCall_IRQn=true\:0\:0\:false\:false\:false\:false\:false\:false
+NVIC.SysTick_IRQn=true\:0\:15\:false\:false\:true\:false\:true\:false
+NVIC.UsageFault_IRQn=true\:0\:0\:false\:false\:true\:false\:false\:false
