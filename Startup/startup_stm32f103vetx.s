@@ -80,7 +80,6 @@ Infinite_Loop:
  *───────────────────────────────────────────────────────────────────────────*/
   .section .isr_vector,"a",%progbits
   .type   g_pfnVectors, %object
-  .size   g_pfnVectors, .-g_pfnVectors
 
 g_pfnVectors:
   /* Cortex-M3 core exceptions */
@@ -162,6 +161,8 @@ g_pfnVectors:
   .word DMA2_Channel2_IRQHandler
   .word DMA2_Channel3_IRQHandler
   .word DMA2_Channel4_5_IRQHandler
+
+  .size   g_pfnVectors, .-g_pfnVectors
 
 /*─────────────────────────────────────────────────────────────────────────────
  * Weak aliases – any handler can be overridden by defining a real function
