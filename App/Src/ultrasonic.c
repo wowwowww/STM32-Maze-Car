@@ -110,6 +110,7 @@ void Ultrasonic_ReadAll(void)
     for (uint8_t i = 0; i < US_COUNT; i++)
     {
         s_distances[i] = Ultrasonic_Read((UltrasonicSensor_t)i);
+        HAL_Delay(US_INTER_SCAN_DELAY_MS);
     }
 }
 
