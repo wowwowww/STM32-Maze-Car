@@ -124,7 +124,7 @@ void MX_TIM4_Init(void)
     HAL_GPIO_Init(US_SERVO_PWM_PORT, &GPIO_InitStruct);
 
     htim4.Instance               = TIM4;
-    htim4.Init.Prescaler         = 71;    /* 72 MHz / 72 = 1 MHz              */
+    htim4.Init.Prescaler         = 71;    /* 72 MHz / (71 + 1) = 1 MHz        */
     htim4.Init.CounterMode       = TIM_COUNTERMODE_UP;
     htim4.Init.Period            = 19999; /* 20 ms period = 50 Hz             */
     htim4.Init.ClockDivision     = TIM_CLOCKDIVISION_DIV1;

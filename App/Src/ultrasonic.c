@@ -19,7 +19,7 @@
 /* ── Private state ───────────────────────────────────────────────────────── */
 static uint16_t s_distances[US_COUNT];  /* cached distances (cm)           */
 
-/* Servo pulse widths in microseconds (20 ms frame, TIM4 @ 1 MHz). */
+/* Servo pulse widths in microseconds (TIM4 counter @ 1 MHz, 50 Hz frame). */
 #define SERVO_PULSE_LEFT_US    1100U
 #define SERVO_PULSE_FRONT_US   1500U
 #define SERVO_PULSE_RIGHT_US   1900U
@@ -42,8 +42,19 @@ static void us_delay(uint32_t us)
 static void servo_set_scan(UltrasonicSensor_t sensor)
 {
     uint16_t pulse_us = SERVO_PULSE_FRONT_US;
-    if (sensor == US_LEFT)  pulse_us = SERVO_PULSE_LEFT_US;
-    if (sensor == US_RIGHT) pulse_us = SERVO_PULSE_RIGHT_US;
+    switch (sensor)
+    {
+    case US_LEFT:
+        pulse_us = SERVO_PULSE_LEFT_US;
+        break;
+    case US_RIGHT:
+        pulse_us = SERVO_PULSE_RIGHT_US;
+        break;
+    case US_FRONT:
+    default:
+        pulse_us = SERVO_PULSE_FRONT_US;
+        break;
+    }
     __HAL_TIM_SET_COMPARE(&htim4, TIM_CHANNEL_1, pulse_us);
 }
 

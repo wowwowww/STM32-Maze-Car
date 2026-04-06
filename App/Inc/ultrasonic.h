@@ -42,7 +42,7 @@ typedef enum {
 #define US_CLEAR_THRESHOLD_CM    25U   /* farther than this → path is clear */
 #define US_MAX_DISTANCE_CM      400U   /* sensor maximum range              */
 #define US_TIMEOUT_US         38000U   /* 38 ms echo timeout                */
-#define US_SERVO_SETTLE_MS       70U   /* servo settle time per scan step   */
+#define US_SERVO_SETTLE_MS       70U   /* ~40-50 ms motion + margin to reduce jitter */
 
 /**
  * @brief Initialise the ultrasonic driver (call after MX_TIM2_Init).
