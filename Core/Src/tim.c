@@ -18,6 +18,7 @@
 
 TIM_HandleTypeDef htim2;
 TIM_HandleTypeDef htim3;
+TIM_HandleTypeDef htim4;
 
 /* ── TIM2: 1 MHz free-running microsecond timer ──────────────────────── */
 void MX_TIM2_Init(void)
@@ -104,4 +105,51 @@ void MX_TIM3_Init(void)
     /* Start both channels immediately (duty = 0 → no motion yet)          */
     HAL_TIM_PWM_Start(&htim3, TIM_CHANNEL_1);
     HAL_TIM_PWM_Start(&htim3, TIM_CHANNEL_2);
+}
+
+/* ── TIM4: 50 Hz PWM for ultrasonic steering servo (PB6 / CH1) ─────────── */
+void MX_TIM4_Init(void)
+{
+    TIM_ClockConfigTypeDef  sClockSourceConfig = {0};
+    TIM_MasterConfigTypeDef sMasterConfig      = {0};
+    TIM_OC_InitTypeDef      sConfigOC          = {0};
+    GPIO_InitTypeDef        GPIO_InitStruct    = {0};
+
+    /* PB6 as AF push-pull for TIM4_CH1                                       */
+    __HAL_RCC_GPIOB_CLK_ENABLE();
+    GPIO_InitStruct.Pin   = US_SERVO_PWM_PIN;
+    GPIO_InitStruct.Mode  = GPIO_MODE_AF_PP;
+    GPIO_InitStruct.Pull  = GPIO_NOPULL;
+    GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_HIGH;
+    HAL_GPIO_Init(US_SERVO_PWM_PORT, &GPIO_InitStruct);
+
+    htim4.Instance               = TIM4;
+    htim4.Init.Prescaler         = 71;    /* 72 MHz / 72 = 1 MHz              */
+    htim4.Init.CounterMode       = TIM_COUNTERMODE_UP;
+    htim4.Init.Period            = 19999; /* 20 ms period = 50 Hz             */
+    htim4.Init.ClockDivision     = TIM_CLOCKDIVISION_DIV1;
+    htim4.Init.AutoReloadPreload = TIM_AUTORELOAD_PRELOAD_ENABLE;
+
+    if (HAL_TIM_PWM_Init(&htim4) != HAL_OK) { Error_Handler(); }
+
+    sClockSourceConfig.ClockSource = TIM_CLOCKSOURCE_INTERNAL;
+    if (HAL_TIM_ConfigClockSource(&htim4, &sClockSourceConfig) != HAL_OK) {
+        Error_Handler();
+    }
+
+    sMasterConfig.MasterOutputTrigger = TIM_TRGO_RESET;
+    sMasterConfig.MasterSlaveMode     = TIM_MASTERSLAVEMODE_DISABLE;
+    if (HAL_TIMEx_MasterConfigSynchronization(&htim4, &sMasterConfig) != HAL_OK) {
+        Error_Handler();
+    }
+
+    sConfigOC.OCMode     = TIM_OCMODE_PWM1;
+    sConfigOC.Pulse      = 1500; /* center position (1.5 ms)              */
+    sConfigOC.OCPolarity = TIM_OCPOLARITY_HIGH;
+    sConfigOC.OCFastMode = TIM_OCFAST_DISABLE;
+    if (HAL_TIM_PWM_ConfigChannel(&htim4, &sConfigOC, TIM_CHANNEL_1) != HAL_OK) {
+        Error_Handler();
+    }
+
+    HAL_TIM_PWM_Start(&htim4, TIM_CHANNEL_1);
 }

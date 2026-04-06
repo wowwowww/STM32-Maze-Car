@@ -4,7 +4,7 @@
  *
  * Configures all GPIO pins used by the Maze Car:
  *  - Motor direction outputs (PB0, PB1, PB10, PB11)
- *  - Ultrasonic trigger outputs and echo inputs (PC0–PC5)
+ *  - Ultrasonic trigger output + echo input (PC0, PC1)
  *  - Status LED (PE0)
  *  - Alternate-function pins for TIM3 and USART1 are configured in their
  *    respective init functions (tim.c, usart.c).
@@ -31,9 +31,7 @@ void MX_GPIO_Init(void)
     HAL_GPIO_WritePin(MOTOR_R_IN4_PORT, MOTOR_R_IN4_PIN, GPIO_PIN_RESET);
 
     /* Ultrasonic: trigger lines LOW (idle)                                  */
-    HAL_GPIO_WritePin(US_FRONT_TRIG_PORT, US_FRONT_TRIG_PIN, GPIO_PIN_RESET);
-    HAL_GPIO_WritePin(US_LEFT_TRIG_PORT,  US_LEFT_TRIG_PIN,  GPIO_PIN_RESET);
-    HAL_GPIO_WritePin(US_RIGHT_TRIG_PORT, US_RIGHT_TRIG_PIN, GPIO_PIN_RESET);
+    HAL_GPIO_WritePin(US_TRIG_PORT, US_TRIG_PIN, GPIO_PIN_RESET);
 
     /* Status LED: off                                                        */
     HAL_GPIO_WritePin(LED_STATUS_PORT, LED_STATUS_PIN, GPIO_PIN_RESET);
@@ -47,16 +45,14 @@ void MX_GPIO_Init(void)
                         | MOTOR_R_IN3_PIN | MOTOR_R_IN4_PIN;
     HAL_GPIO_Init(GPIOB, &GPIO_InitStruct);
 
-    /* ── Ultrasonic trigger outputs (PC0, PC2, PC4) ─────────────────────── */
-    GPIO_InitStruct.Pin = US_FRONT_TRIG_PIN | US_LEFT_TRIG_PIN
-                        | US_RIGHT_TRIG_PIN;
+    /* ── Ultrasonic trigger output (PC0) ─────────────────────────────────── */
+    GPIO_InitStruct.Pin = US_TRIG_PIN;
     HAL_GPIO_Init(GPIOC, &GPIO_InitStruct);
 
-    /* ── Ultrasonic echo inputs (PC1, PC3, PC5) ─────────────────────────── */
+    /* ── Ultrasonic echo input (PC1) ─────────────────────────────────────── */
     GPIO_InitStruct.Mode = GPIO_MODE_INPUT;
     GPIO_InitStruct.Pull = GPIO_PULLDOWN;
-    GPIO_InitStruct.Pin  = US_FRONT_ECHO_PIN | US_LEFT_ECHO_PIN
-                         | US_RIGHT_ECHO_PIN;
+    GPIO_InitStruct.Pin  = US_ECHO_PIN;
     HAL_GPIO_Init(GPIOC, &GPIO_InitStruct);
 
     /* ── Status LED output (PE0) ─────────────────────────────────────────── */

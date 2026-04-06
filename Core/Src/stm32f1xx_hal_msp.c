@@ -33,7 +33,7 @@ void HAL_TIM_Base_MspInit(TIM_HandleTypeDef *htim_base)
 }
 
 /**
- * @brief TIM PWM MSP init – enables the peripheral clock for TIM3.
+ * @brief TIM PWM MSP init – enables peripheral clocks for PWM timers.
  *        GPIO pin configuration is handled inside MX_TIM3_Init().
  */
 void HAL_TIM_PWM_MspInit(TIM_HandleTypeDef *htim_pwm)
@@ -41,5 +41,9 @@ void HAL_TIM_PWM_MspInit(TIM_HandleTypeDef *htim_pwm)
     if (htim_pwm->Instance == TIM3)
     {
         __HAL_RCC_TIM3_CLK_ENABLE();
+    }
+    else if (htim_pwm->Instance == TIM4)
+    {
+        __HAL_RCC_TIM4_CLK_ENABLE();
     }
 }
