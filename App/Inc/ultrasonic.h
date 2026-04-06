@@ -42,7 +42,7 @@ typedef enum {
 #define US_CLEAR_THRESHOLD_CM    25U   /* farther than this → path is clear */
 #define US_MAX_DISTANCE_CM      400U   /* sensor maximum range              */
 #define US_TIMEOUT_US         38000U   /* 38 ms echo timeout                */
-#define US_SERVO_SETTLE_MS       70U   /* ~40-50 ms motion + ~20-30 ms safety margin */
+#define US_SERVO_SETTLE_MS       70U   /* validated default settle time for stable readings */
 #define US_INTER_SCAN_DELAY_MS   15U   /* brief gap between scan points to avoid echo overlap */
 
 /**
