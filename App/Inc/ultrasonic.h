@@ -2,10 +2,12 @@
  * @file  ultrasonic.h
  * @brief HC-SR04 ultrasonic distance sensor driver.
  *
- * Three sensors are supported:
- *   FRONT  – Trig=PC0, Echo=PC1
- *   LEFT   – Trig=PC2, Echo=PC3
- *   RIGHT  – Trig=PC4, Echo=PC5
+ * One HC-SR04 sensor is mounted on a steering servo:
+ *   Sensor Trig/Echo  – PC0 / PC1
+ *   Servo PWM         – TIM4_CH1 (PB6)
+ *
+ * The driver rotates the servo to LEFT/FRONT/RIGHT scan positions and
+ * performs one measurement at each position.
  *
  * Timing is performed with TIM2 running at 1 MHz (1 µs resolution).
  *
@@ -40,6 +42,8 @@ typedef enum {
 #define US_CLEAR_THRESHOLD_CM    25U   /* farther than this → path is clear */
 #define US_MAX_DISTANCE_CM      400U   /* sensor maximum range              */
 #define US_TIMEOUT_US         38000U   /* 38 ms echo timeout                */
+#define US_SERVO_SETTLE_MS       70U   /* validated default settle time for stable readings */
+#define US_INTER_SCAN_DELAY_MS   15U   /* brief gap between scan points to avoid echo overlap */
 
 /**
  * @brief Initialise the ultrasonic driver (call after MX_TIM2_Init).

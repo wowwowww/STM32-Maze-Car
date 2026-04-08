@@ -14,12 +14,9 @@
  * │  Right motor IN3 │  PB10        │  GPIO_Output                        │
  * │  Right motor IN4 │  PB11        │  GPIO_Output                        │
  * ├──────────────────┼──────────────┼─────────────────────────────────────┤
- * │  Front Trig      │  PC0         │  GPIO_Output                        │
- * │  Front Echo      │  PC1         │  GPIO_Input                         │
- * │  Left  Trig      │  PC2         │  GPIO_Output                        │
- * │  Left  Echo      │  PC3         │  GPIO_Input                         │
- * │  Right Trig      │  PC4         │  GPIO_Output                        │
- * │  Right Echo      │  PC5         │  GPIO_Input                         │
+ * │  US Trig         │  PC0         │  GPIO_Output                        │
+ * │  US Echo         │  PC1         │  GPIO_Input                         │
+ * │  Servo PWM       │  PB6         │  TIM4_CH1 (AF, 50 Hz)              │
  * ├──────────────────┼──────────────┼─────────────────────────────────────┤
  * │  Debug TX        │  PA9         │  USART1_TX                          │
  * │  Debug RX        │  PA10        │  USART1_RX                          │
@@ -51,23 +48,14 @@ extern "C" {
 #define MOTOR_R_IN4_PORT    GPIOB
 
 /* ── Ultrasonic sensor GPIO ────────────────────────────────────────────── */
-#define US_FRONT_TRIG_PIN   GPIO_PIN_0
-#define US_FRONT_TRIG_PORT  GPIOC
+#define US_TRIG_PIN         GPIO_PIN_0
+#define US_TRIG_PORT        GPIOC
 
-#define US_FRONT_ECHO_PIN   GPIO_PIN_1
-#define US_FRONT_ECHO_PORT  GPIOC
+#define US_ECHO_PIN         GPIO_PIN_1
+#define US_ECHO_PORT        GPIOC
 
-#define US_LEFT_TRIG_PIN    GPIO_PIN_2
-#define US_LEFT_TRIG_PORT   GPIOC
-
-#define US_LEFT_ECHO_PIN    GPIO_PIN_3
-#define US_LEFT_ECHO_PORT   GPIOC
-
-#define US_RIGHT_TRIG_PIN   GPIO_PIN_4
-#define US_RIGHT_TRIG_PORT  GPIOC
-
-#define US_RIGHT_ECHO_PIN   GPIO_PIN_5
-#define US_RIGHT_ECHO_PORT  GPIOC
+#define US_SERVO_PWM_PIN    GPIO_PIN_6
+#define US_SERVO_PWM_PORT   GPIOB
 
 /* ── Status LED ────────────────────────────────────────────────────────── */
 #define LED_STATUS_PIN      GPIO_PIN_0

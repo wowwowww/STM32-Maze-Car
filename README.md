@@ -11,7 +11,7 @@ developed with the **STM32 VS Code Extension** and a CMake build system.
 |---------|---------|
 | MCU | STM32F103VET6 (Cortex-M3, 72 MHz, 512 KB Flash, 64 KB SRAM) |
 | Motor driver | L298N dual H-bridge; 20 kHz PWM via TIM3 |
-| Obstacle sensing | 3 × HC-SR04 ultrasonic sensors (front, left, right) |
+| Obstacle sensing | 1 × HC-SR04 on steering servo (left/front/right scan) |
 | Path finding | **Right-hand rule** (default) or **Flood-fill** (compile-time selection) |
 | Wall following | PID controller trims left/right wheel speeds |
 | Debug output | USART1 at 115 200 baud via USB–UART adapter |
@@ -32,12 +32,9 @@ developed with the **STM32 VS Code Extension** and a CMake build system.
 | Left motor IN2 | **PB1** | GPIO output |
 | Right motor IN3 | **PB10** | GPIO output |
 | Right motor IN4 | **PB11** | GPIO output |
-| Front US trigger | **PC0** | GPIO output |
-| Front US echo | **PC1** | GPIO input (pull-down) |
-| Left US trigger | **PC2** | GPIO output |
-| Left US echo | **PC3** | GPIO input (pull-down) |
-| Right US trigger | **PC4** | GPIO output |
-| Right US echo | **PC5** | GPIO input (pull-down) |
+| US trigger | **PC0** | GPIO output |
+| US echo | **PC1** | GPIO input (pull-down) |
+| US servo PWM | **PB6** | TIM4\_CH1 (AF push-pull, 50 Hz) |
 | Debug TX | **PA9** | USART1\_TX |
 | Debug RX | **PA10** | USART1\_RX |
 | Status LED | **PE0** | GPIO output (active-high) |
@@ -60,15 +57,21 @@ GND  ──────►  GND
              OUT3/OUT4 → Right motor
 ```
 
-### HC-SR04 Wiring (×3)
+### HC-SR04 Wiring (×1, servo-mounted)
 
 ```
 HC-SR04      STM32
 ───────      ──────
 VCC    ──►  3.3–5 V
 GND    ──►  GND
-TRIG   ──►  PC0 / PC2 / PC4
-ECHO   ──►  PC1 / PC3 / PC5  (use a 5 V→3.3 V voltage divider on ECHO!)
+TRIG   ──►  PC0
+ECHO   ──►  PC1  (use a 5 V→3.3 V voltage divider on ECHO!)
+
+Servo (steering mount)   STM32
+──────────────────────   ──────
+VCC                 ──►  5 V (external recommended)
+GND                 ──►  GND (common ground with STM32)
+PWM signal          ──►  PB6 (TIM4_CH1, 50 Hz)
 ```
 
 > ⚠️ The HC-SR04 ECHO line is 5 V logic. Protect the STM32 GPIO with a
@@ -88,14 +91,15 @@ ECHO   ──►  PC1 / PC3 / PC5  (use a 5 V→3.3 V voltage divider on ECHO!)
         ▼               ▼                   ▼
   ┌───────────┐  ┌─────────────┐  ┌──────────────────┐
   │  motor.c  │  │ultrasonic.c │  │  maze_solver.c   │
-  │ L298N PWM │  │  HC-SR04    │  │ Right-hand rule  │
-  │  control  │  │  3 sensors  │  │  or Flood-fill   │
+  │ L298N PWM │  │ HC-SR04 +   │  │ Right-hand rule  │
+  │  control  │  │ servo scan  │  │  or Flood-fill   │
   └─────┬─────┘  └──────┬──────┘  └────────┬─────────┘
         │               │                  │
         ▼               ▼                  ▼
   ┌───────────┐  ┌─────────────┐  ┌──────────────────┐
   │  tim.c    │  │   tim.c     │  │     pid.c        │
-  │ TIM3 PWM  │  │ TIM2 1 MHz  │  │  wall-following  │
+  │ TIM3/TIM4 │  │ TIM2 1 MHz  │  │  wall-following  │
+  │ PWM       │  │ timing      │  │                  │
   └───────────┘  └─────────────┘  └──────────────────┘
 ```
 
@@ -143,12 +147,12 @@ STM32-Maze-Car/
 │   │   ├── maze_solver.h   – maze-solving algorithm interface
 │   │   ├── motor.h         – DC motor control interface
 │   │   ├── pid.h           – generic discrete PID controller
-│   │   └── ultrasonic.h    – HC-SR04 ultrasonic driver interface
+│   │   └── ultrasonic.h    – HC-SR04 + servo-scan driver interface
 │   └── Src/
 │       ├── maze_solver.c   – right-hand rule + flood-fill implementation
 │       ├── motor.c         – L298N H-bridge + TIM3 PWM driver
 │       ├── pid.c           – PID controller
-│       └── ultrasonic.c    – HC-SR04 trigger/echo measurement driver
+│       └── ultrasonic.c    – servo positioning + HC-SR04 measurement
 ├── Core/
 │   ├── Inc/
 │   │   ├── gpio.h
@@ -163,7 +167,7 @@ STM32-Maze-Car/
 │       ├── stm32f1xx_hal_msp.c
 │       ├── stm32f1xx_it.c  – exception handlers
 │       ├── system_stm32f1xx.c
-│       ├── tim.c           – TIM2 (1 MHz) + TIM3 (20 kHz PWM)
+│       ├── tim.c           – TIM2 (1 MHz) + TIM3/TIM4 PWM
 │       └── usart.c         – USART1 115200 baud + printf redirect
 ├── Drivers/                – STM32CubeF1 HAL (see Installation below)
 │   ├── CMSIS/

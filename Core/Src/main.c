@@ -38,6 +38,7 @@ int main(void)
     MX_GPIO_Init();
     MX_TIM2_Init();   /* microsecond timer */
     MX_TIM3_Init();   /* motor PWM         */
+    MX_TIM4_Init();   /* ultrasonic servo PWM */
     MX_USART1_UART_Init();
 
     printf("\r\n==============================\r\n");
